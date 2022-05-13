@@ -19,7 +19,7 @@ import os.path
 import argparse
 
 def info_extractor(url):
-    _VALID_URL = b'(?:https://)?(?:www\.)?watchcartoononline\.io/([^/]+)'
+    _VALID_URL = b'(?:https://)?(?:www\.)?wcostream\.com/([^/]+)'
     #checks if url is valid
     if re.match(_VALID_URL, url) is not None:
         #sets user_agent so watchcartoononline doesn't cause issues
@@ -31,7 +31,7 @@ def info_extractor(url):
         webpage = urlopen(request).read()
 
         print("[watchcartoononline-dl] Finding video")
-        video_url = re.search(b'<iframe [^>]*src="https://www.watchcartoononline.io/inc/(.+?)>', webpage).group()
+        video_url = re.search(b'<iframe [^>]*src="https://www.wcostream.com/inc/(.+?)>', webpage).group()
         video_url = re.search(b'src="(.+?)"', video_url).group(1).replace(b' ',b'%20')
 
         # "clicks" the "Click Here to Watch Free" button to so it can access the actual video file url
@@ -49,10 +49,10 @@ def info_extractor(url):
         else:
             return final_url[-1]
     else:
-        print("ERROR: URL was invalid, please use a valid URL from www.watchcartoononline.com")
+        print("ERROR: URL was invalid, please use a valid URL from www.wcostream.com")
 
 def episodes_extractor(episode_list, ep_range, directory):
-    _VALID_URL = r'(?:https://)?(?:www\.)?watchcartoononline\.io/anime/([^/]+)'
+    _VALID_URL = r'(?:https://)?(?:www\.)?wcostream\.com/anime/([^/]+)'
     #check if url is valid
     if re.match(_VALID_URL, episode_list) is not None:
 
@@ -75,7 +75,7 @@ def episodes_extractor(episode_list, ep_range, directory):
             print("WARNING: couldn't find 'Recenly Added' section in page, maybe the site layout has changed?")
 
         #todo: improve this regex to work for more stuff
-        page_urls = re.findall(b'https://www.watchcartoononline.io/[a-zA-Z0-9-]+episode-[0-9]{1,4}[a-zA-Z0-9-]+', truncated)[::-1]
+        page_urls = re.findall(b'https://www.wcostream.com/[a-zA-Z0-9-]+episode-[0-9]{1,4}[a-zA-Z0-9-]+', truncated)[::-1]
         #print(list of URLs we are about to download
 
         if len(ep_range) > 0:
@@ -105,7 +105,7 @@ def episodes_extractor(episode_list, ep_range, directory):
             print("[watchcartoononline-dl]  Downloading "+ url.decode("utf-8"))
             doAnEpisode(url, directory)
     else:
-        print("ERROR: URL was invalid, please use a valid URL from www.watchcartoononline.com")
+        print("ERROR: URL was invalid, please use a valid URL from www.wcostream.com")
 
 def downloader(fileurl, file_name):
     try:
